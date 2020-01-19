@@ -508,7 +508,7 @@ SERVERLESS
 	- it can be used as on-demand compute service in response to an HTTP request using AWS API Gateway or API calls made using AWS SDKs
 	- Lambda supports functions from following languages - Java, Python, Node.js, C#, Go, PowerShell, Ruby
 	- Architectures can get extremely complicated with lambda, AWS X-Ray allows to debug what is happening
-	
+
 ------------------------------------------------------------------------------------------------------------
 Extra Notes:
 - S3 is a durable key-value store
@@ -520,3 +520,4 @@ Extra Notes:
 - The Virtual Private Gateway has the information regarding the AWS side of the VPN and connects a specified VPC to the VPN.
 - AWS offers 4 levels of support-Enterprise, Business, Developer and the Basic free level.
 - Launch permissions, S3 bucket permissions, and user-defined tags must be copied manually to an instance based on an AMI. User data is part of the AMI, itself, and does not need to be copied manually.
+
