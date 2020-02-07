@@ -65,7 +65,7 @@ Cloud Watch
 	you can create CloudWatch alarms which trigger notification.
 
 Cloud Watch vs Cloud Trail :
-	AWS Cloud Trail increases visibility into your user and resource acctivity by recording AWS Management Console actions and API calls.
+	AWS Cloud Trail increases visibility into your user and resource activity by recording AWS Management Console actions and API calls.
 	By Cloud Trail you can identify which user and accounts called AWS, the source IP address from which the calls were made, and when the calls occurred.
 	
 IAM Roles with EC2

@@ -1,0 +1,29 @@
+AWS EBS, EFS and S3 storage
+
+EBS - high availability block-level storage volumes for EC2 instances.
+EBS stores data on file system which is retained after the EC2 instance is shut down.
+- Increase throughput by devoting network capacity and minimizing the network contention between your instances and EBS.
+- By using SSD EBS volumes, it offers reliable I/O performance scaled to meet your workload needs.
+- EBS volumes offer redundancy within its Availability Zones while access control and encryption bolster security.
+ 
+
+
+EFS offers scalab;e file storage, optimized for EC2
+EFS can be used as a common data source for any application or workload that runs on numerous instances
+- EFS is the best choice for running any application that has a high workload, requires scalable storage, and must produce output quickly.
+- Use it for running shared volumes, or for big data analysis.
+- you can use Lifecycle Management to transfer files that have been unused for a month to a more cost-effective storage class, which can lower expenses up to 85%.
+- EFS can encrypt your data, whether it’s in transit or at rest.
+
+
+
+S3 is an object store, good for storing vast number of backups or user files
+S3 is not limited to EC2, unlike EFS and EBS
+S3 also supports static web content hosting that can be accessed from the S3 bucket or from AWS CloudFront. 
+Storing data throughout S3 storage classes saves costs and maintains high levels of performance.
+you can make the transfer using an S3 Lifecycle policy.
+
+
+
+EBS is only accessible from a single EC2 instance in particular AWS region, while EFS allows to mount the file system across multiple regions and instances.
+
