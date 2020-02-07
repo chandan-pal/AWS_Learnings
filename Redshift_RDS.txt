@@ -1,0 +1,39 @@
+AWS RedShift vs RDS
+
+Scaling:
+- Since RDS is based on virtualized instances, its scaling is done by reconfiguring the virtual instance capabilities. Scaling takes only a few minutes and can be done in a few clicks in the AWS console.
+- Redshift is based on a more complex architecture and it means scaling is not as seamless as it is in RDS. Redshift instances with support for elastic resize can do it in a few minutes, but the database unavailable time window is certainly higher than that of RDS. 
+
+- the limit of scaling is higher for Redshift when it comes to storage. Redshift also has an option called concurrency scaling which can be used to support a virtually unlimited number of concurrent users without a drop in querying performance
+
+
+
+Storage:
+- With Redshift, the storage can be scaled up to petabytes of data
+- With RDS, since it works with individual virtualized instances, the storage limit is in the range of TBs and will vary according to the chosen database engine. For SQL server the storage capacity is limited at 16 TB, while the aurora engine can scale up to 64 TB. All the other engine types can scale up to 32 TB of data.
+
+
+Performance:
+- RDS offers better performance when it comes to queries that do not test its limits; To be specific, queries that do not span across millions of rows offer better performance in RDS.
+- The primary reason for this is that Redshift has a very sophisticated query optimizer and execution planner at work before the actual query execution. For simpler or low data scan queries, this is an overkill since query optimization in most cases takes more time than the execution.
+
+
+
+
+
+
+When to use Redshift?
+You want a petabyte-scale data warehouse and is not happy with traditional database engines
+Your analytical and reporting workload is heavy and can interfere with your OLTP database.
+Your queries span across millions of rows and you anticipate even more complex queries
+You anticipate a constant query workload and your cluster will be running for the most part of the day.
+You are ready to manage the uniqueness of your insertion keys yourselves and do not expect the database to ensure it.
+You have a willing team to put their head into DIST KEYS and SORT KEYS and structure data so that best performance is extracted.
+
+When to use RDS?
+You want to use traditional databases in the cloud and the only requirement is to offload the database management. 
+Your data volume is in TBs and you do not anticipate a large increase in the near future. RDS hits its storage limits at 64 TB.
+You have an online transaction processing use case and want instant results with lesser data.
+You don’t have queries that span across millions of rows and the query complexity is limited. 
+Your reporting and analytical workloads are minimal and do not interfere with your OLTP workloads.
+Your budget is tighter and you have no intention to spend money anticipating future astronomical workloads.
