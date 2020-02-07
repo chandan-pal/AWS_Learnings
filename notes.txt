@@ -72,7 +72,7 @@ IAM Roles with EC2
 	Roles are more secure than storing access key and secret access key on individual EC2 instance.
 	Roles are easier to manage than access key
 	Roles can be assigned to an EC2 instance after it is created using both the console and command line.
-	Roles are uniersal - can be used in any region.
+	Roles are universal - can be used in any region.
 	
 BootStrap Scripts
 	commands to execute when instance boots
@@ -87,8 +87,7 @@ EFS
 	Elastic File System
 	is a file storage service for EC2 instances.
 	with EFS storage system is elastic, growing and shrinking automatically as you add or remove files.
-	Two EC2 instances cannot share one EBS volume.
-	But, EFS can be shared over multiple EC2 instances
+	Two EC2 instances cannot share one EBS volume. But, EFS can be shared over multiple EC2 instances
 	EFS supports Network File System version 4 (NFSv4) protocol.
 	You only pay for the storage you use. No pre-provisioning is required. and can scale up to petabytes.
 	can support thousands of concurrent NFS connections
@@ -117,7 +116,7 @@ EC2 Placement Groups
 ----------------------------------------------------------------------------------------------------
 AWS Database
 	two features of AWS databases :
-	- Multi AZ - for disaster recovery : allows to have an exat copy of the database in another Availability Zone. AWS handles the replication.
+	- Multi AZ - for disaster recovery : allows to have an exact copy of the database in another Availability Zone. AWS handles the replication.
 	- Read replicas - for performance
 	
 	RDS runs into virtual machines, but you cannot login/ssh to those machines
