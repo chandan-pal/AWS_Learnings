@@ -6,6 +6,7 @@ SSE - Server Side Encryption
 EC2 - Elastic Compute Cloud
 EBS - Elastic Block Store
 EFS - Elastic File System
+ECS - Elastic Container Service
 
 SNOWBALL:
  - Snowball : a peta-byte scale data transport solution in and out AWS (using secure applications) and cost effective
@@ -498,7 +499,7 @@ AWS Applications
 		- Identity Pool authorise access to AWS resources
 ----------------------------------------------------------------------------------------------------------
 SERVERLESS
-	- an execution model where cloud provider (AWS, Azure, Google Cloud etc.) is responsible for executing a piece of code by dynamically allocating the resources. The executable code can be run inside dynamic stateless containers. There is no need to worry about the infrasture on which the code will be running. The amount charged is also based on number of executions/time of execution/resources used only for that period of time.
+	- an execution model where cloud provider (AWS, Azure, Google Cloud etc.) is responsible for executing a piece of code by dynamically allocating the resources. The executable code can be run inside dynamic stateless containers. There is no need to worry about the infrasture on which the code will be running. The amount charged is also based on number of executions/time of execution/resources(memory) used only for that period of time.
 	LAMBDA:
 	- AWS Labda is a compute service where you can upload your code and create a lambda function.
 	- AWS Lambda takes care of provisioning and managing the servers that you use to run the code.
