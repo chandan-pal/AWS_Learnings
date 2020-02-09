@@ -235,7 +235,7 @@ Route53
 		Name Server (NS) Record:
 		They are used by top level domain servers to direct traffic to the content DNS server which contains the authoritative DNS records.
 		
-		user -------------> TLD -------> NS Records ------------> SOA -------------> A Records / CName
+		user -------------> TLD -------> NS Records ------------> SOA -------------> A Record / CName
 	 	(example.com)     (.com)      (ns.awsdns.com)                                 (126.454.155.555)
 		
 	
@@ -244,7 +244,7 @@ Route53
 		- one record with multiple IP addresses
 		- Route 53 return all values in random order
 	- weighted routing
-		- alows to split traffic based on different weights assigned
+		- allows to split traffic based on different weights assigned
 	- latency routing
 		- based on lowest network latency for end user
 	- failover routing

@@ -1,0 +1,5 @@
+- Security groups are tied to an instance whereas Network ACLs are tied to the subnet
+- Security groups are stateful: This means any changes applied to an incoming rule will be automatically applied to the outgoing rule. NACL are stateless.
+- Security group support allow rules only. Network ACL support allow and deny rules. 
+- Security groups evaluate all the rules in them before allowing a traffic whereas NACLs do it in the number order, from top to bottom.
+- Security group first layer of defense, whereas Network ACL is second layer of the defense.
