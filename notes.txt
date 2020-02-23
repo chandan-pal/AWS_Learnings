@@ -9,13 +9,12 @@ EFS - Elastic File System
 ECS - Elastic Container Service
 
 SNOWBALL:
- - Snowball : a peta-byte scale data transport solution in and out AWS (using secure applications) and cost effective
+a peta-byte scale data transport solution in and out AWS (via physical briefcase computer) and cost effective
  - Snowball edge : smaller version of Snowball (100 TB) also has compute capability
  - Snowmobile : an exabyte scale data transfer service used to move extremely large amounts of data to AWS
  - snowball services can be used to export or import heavy heavy data in S3.
 
-Storage Gateway:
- - service that connects on-premise software appliance with AWS
+Storage Gateway: (service that connects on-premise software appliance with AWS)
  - File Gateway : (NFS & SMB) - way to storing files in S3
  - Volume Gateway : (iSCSI) - (Stored / Cached) - way of storing copies of HDD or virtual HDD
  - Tape Gateway : Virtual Tape Library
