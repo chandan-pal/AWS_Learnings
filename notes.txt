@@ -319,12 +319,12 @@ VPC (Virtual Private Cloud)
 	NACL (Network Access Control List)
 	- VPC caomes with default NACL, which by default allows all outbound and inbound traffic.
 	- by default all custom NACL denies all inbound and outbound traffic untill any rule is added.
-	- Each subnet in VPC must be associated with a NACL, if not explicitly associated, the subnet is subnet is automatically associated with default NACL.
+	- Each subnet in VPC must be associated with a NACL, if not explicitly associated, the subnet is automatically associated with default NACL.
 	- it is recommended to block IP addresses using NACL, and not through security groups.
 	- one NACL can be associated with multiple subnets but one subnet can be associated with only one NACL.
 	- NACLs contain a numbered list of rules that is evaluated in order, starting with the lowest numbered rule.
 	- NACLs have separate inbound and outbound rules, and each rule can either allow or deny traffic.
-	- NACLs are stateless which means responsed to inboud traffic are subject to rules for outbound traffic (and vice versa)
+	- NACLs are stateless which means responses to inboud traffic are subject to rules for outbound traffic (and vice versa)
 	
 	VPC FLOW LOGS:
 	- feature that enables to capture information about the IP traffic going to and from the network interfaces in VPC
