@@ -316,7 +316,7 @@ VPC (Virtual Private Cloud)
 	- Automatically assigned a public IP address
 	- no need to disable source/destination checks on NAT Gateways
 	
-	NACL (Network Access Control List)
+	NACL (Network Access Control List) (virtual firewall at subnet level)
 	- VPC caomes with default NACL, which by default allows all outbound and inbound traffic.
 	- by default all custom NACL denies all inbound and outbound traffic untill any rule is added.
 	- Each subnet in VPC must be associated with a NACL, if not explicitly associated, the subnet is automatically associated with default NACL.
