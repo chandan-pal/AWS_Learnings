@@ -300,7 +300,7 @@ VPC (Virtual Private Cloud)
 		A subnet can only be associated with one route table at a time, but same route table can be associated with multiple subnets
 	
 	
-	VPC peering
+	VPC PEERING
 	- allows to connect one VPC to another(even in different region or different AWS account) via a direct network route using private IP address
 	- instances in this case behave as if they were on the same private network
 	- Peering is in STAR configuration (no transitive peering, only direct peering)
@@ -326,7 +326,7 @@ VPC (Virtual Private Cloud)
 	- NACLs have separate inbound and outbound rules, and each rule can either allow or deny traffic.
 	- NACLs are stateless which means responsed to inboud traffic are subject to rules for outbound traffic (and vice versa)
 	
-	VPC flow logs:
+	VPC FLOW LOGS:
 	- feature that enables to capture information about the IP traffic going to and from the network interfaces in VPC
 	- Flow log data is stored using Amazon CloudWatch Logs.
 		Flow logs can be created at 3 levels
@@ -349,19 +349,22 @@ VPC (Virtual Private Cloud)
 	- Bastion is also called Jump Boxes in Australia
 	- A NAT Gateway cannot be used as a Bastion host
 	
-	AWS Direct Connect:
+	AWS DIRECT CONNECT:
 	- solution that makes it easy to establish a dedicated private network connection from your premises to AWS.
 	- It can reduce network cost, increase bandwidth throughput, and provide a more consistent network exerience than internet-based connection
 	
-	VPC Endppoints
-	- enables to privately connect VPC too supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway,  NAT device, VPN connection or AWS Direct connect connection.
+	VPC ENDPPOINTS
+	- enables to privately connect VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway,  NAT device, VPN connection or AWS Direct connect connection.
 	- instances in VPC do not require public IP addresses to communicate with resources in the service.
 	- Traffic between VPC and other services does not leave Amazon network.
 	- Basically, they are virtual devices, horizontally scaled, redundant and highly available VPC components that allow communication between instances in your VPC services without imposing availability risks or bandwidth constraints on your network traffic.
 	- there are two types of VPC Endpoints:
 		1. Interface Endpoints
-			- elastic network interface with a private IP address that serves as an entry point for traffic destined to a supported service.
+			- uses Elastic Network Interface (ELI) with a private IP address that serves as an entry point for traffic destined to a supported service.
+			- costs money
 		2. Gateway Endpoints
+			- a gateway that is a target for specific route in your route table
+			- are free
 
 ------------------------------------------------------------------------------------------------------------
 HA Architecture
