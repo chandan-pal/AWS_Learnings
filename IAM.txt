@@ -1,0 +1,14 @@
+IAM
+
+IAM allows management of access of users and resources
+
+IAM Users		: End users who log into the console or interact with AWS resource programmatically.
+IAM Groups		: Group of IAM users so they share same permission levels, eg. Administrators, Developers, Auditors
+IAM Roles		: Associate permissions to a role and then assign this to users or gropus. IAM roles can also be added to resources
+IAM Policies	: JSON documents which grant permission for a specific, group or role to access services. Can also manage resources
+
+
+IAM POLICIES:
+Managed Policies			: manages by AWS. Cannot edit.
+Customer Managed Policies	: created by use. Is editable
+Inline Policies				: a policy which is directly attached to the user
