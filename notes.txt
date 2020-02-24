@@ -7,25 +7,31 @@ EC2 - Elastic Compute Cloud
 EBS - Elastic Block Store
 EFS - Elastic File System
 ECS - Elastic Container Service
+NAT - Network Address Translation
 
+
+--------------------------------------------------------------------------------------------------------------------------------
 DATA TRANSFER SERVICE:
  - Snowball      : a peta-byte scale data transport solution in and out AWS (via physical briefcase computer) and cost effective than upload to S3
  - Snowball edge : smaller version of Snowball (100 TB) also has compute capability
  - Snowmobile    : an exabyte scale data transfer service used to move extremely large amounts of data to AWS
 
-Storage Gateway: (service that connects on-premise software appliance with AWS)
- - File Gateway : (NFS & SMB) - way to storing files in S3
+STORAGE GATEWAY: (service that connects on-premise software appliance with AWS)
+ - File Gateway   : (NFS & SMB) - way to storing files in S3
  - Volume Gateway : (iSCSI) - (Stored / Cached) - way of storing copies of HDD or virtual HDD
- - Tape Gateway : Virtual Tape Library
- 
-EBS : Elastic Block Store (vitual hard disk drive in AWS)
-	General Purpose (gp2) : all purpose
-	Provisioned IOPS (io1) : Highest performance - generally for Database
-	Throughput HDD (st1) : Big data and data warehousing
-	Cold HDD (sc1) : lowest cost - less frequently access like file servers - less performance
-	EBS Magnetic (standard) : outdated - infrequently access workloads - least performance
+ - Tape Gateway   : Virtual Tape Library
 
-volumes and snapshots : 
+--------------------------------------------------------------------------------------------------------------------------------
+EC2 (Elastic Cloud Compute)
+
+EBS - Elastic Block Store (vitual hard disk drive in AWS)
+	General Purpose (gp2)  : all purpose
+	Provisioned IOPS (io1) : Highest performance - generally for Database
+	Throughput HDD (st1)   : Big data and data warehousing
+	Cold HDD (sc1)         : lowest cost - less frequently access like file servers - less performance
+	EBS Magnetic (standard): outdated - infrequently access workloads - least performance
+
+Volumes and Snapshots : 
 	volumes exist on EBS
 	Snapshot exist on S3
 	Snapshots are point in time copies of volumes
@@ -261,11 +267,12 @@ Route53
 	
 --------------------------------------------------------------------------------------------------------
 VPC (Virtual Private Cloud)
-	- a logically isolated section of the Amazon Web Services (AWS) Cloud
-	- where resources can be launched in a virtual network that we define.
+	- a logically isolated section of the Amazon Web Services (AWS) Cloud, where resources can be launched in a virtual network that we define.
 	- gives complete control over virtual networking environment like selection of IP ranges, creation of subnets, configuring route tables and network getways.
-	- 1 subnet can only be spread in 1 AZ (Availability Zone)
-	- when you create a VPC a default Route Table, Network Access Control List, and a default security group is created.
+	- VPCs are region specific, they do not span regions
+	- Subnets are AZ specific, they do not span AZs
+	- you can create upto 5 VPC per region
+	- when you create a custom VPC a default Route Table, Network Access Control List, and a default security group is created.
 	- It won't create any subnets, nor will it create a default internet gateway
 	- The AZ's are randomized. US-East-1A in one AWS account can be a completely different availability zone to US-East-1A in another AWS account
 	- Amazon always reserves 5 IP addresses within the subnets (four starting and one last).
@@ -279,7 +286,7 @@ VPC (Virtual Private Cloud)
 	- create internet getway and attach it to our VPC
 	- Much better security control over AWS resources
 	- Instance security groups
-	- subnet network access control lists (ACL).
+	- subnet Network Access Control Lists (NACL).
 	
 	Types of VPC
 	- Default and custom
@@ -287,13 +294,18 @@ VPC (Virtual Private Cloud)
 	- All subnets in VPC have a route out to internet
 	- each EC2 instance has both public and private IP address
 	
+	ROUTE TABLES
+		Route tables are used to determine where network traffic is directed.
+		Each subnet in VPC must be associated with a route table.
+		A subnet can only be associated with one route table at a time, but same route table can be associated with multiple subnets
+	
+	
 	VPC peering
 	- allows to connect one VPC to another(even in different region or different AWS account) via a direct network route using private IP address
 	- instances in this case behave as if they were on the same private network
 	- Peering is in STAR configuration (no transitive peering, only direct peering)
 	
-	NAT (Network Address Translation)
-	NAT Instances & NAT Gateways:
+	NAT Instances & NAT Gateways/Internet Gateways (IGW):
 	- NAT Instances are individual EC2 instances
 	- NAT Gateways are highly availabe gateway that allows private subnets to communicate out to internet without becoming public.
 	- NAT Gateways are not dependent on single instances.
@@ -317,7 +329,6 @@ VPC (Virtual Private Cloud)
 	VPC flow logs:
 	- feature that enables to capture information about the IP traffic going to and from the network interfaces in VPC
 	- Flow log data is stored using Amazon CloudWatch Logs.
-	
 		Flow logs can be created at 3 levels
 		1. VPC level
 		2. Subnet level
