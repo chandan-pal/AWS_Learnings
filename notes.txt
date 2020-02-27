@@ -79,14 +79,14 @@ IAM Roles with EC2
 	Roles can be assigned to an EC2 instance after it is created using both the console and command line.
 	Roles are universal - can be used in any region.
 	
-BootStrap Scripts
+BootStrap Scripts (UserData)
 	commands to execute when instance boots
 	its a way of automating your infrastructure.
+	curl http://169.254.169.254/latest/user-data
 	
 Instance Metadata
 	Used to get information about an instance.
 	curl http://169.254.169.254/latest/meta-data
-	curl http://169.254.169.254/latest/user-data
 	
 EFS
 	Elastic File System
@@ -218,16 +218,16 @@ Route53
 		
 		A Record (Address Record):
 		- fundamental type of DNS record.
-		is used by a computer to translate a domain name to an IP address.
+		- is used by a computer to translate a domain name to an IP address.
 		
 		CName (Canonical Name):
 		- can be used to resolve one domain name to another
+		- A CName can not be used for naked domain names (zone apex record i.e. without 'www' or other sub-domains)
 		
 		Alias Records
-		- are used to map resource record sets in your hosted zone to Elastic Load Balancers, CloudFront distributions, or S3 buckets that are configured as websites.
+		- are used to map resource record sets in your hosted zone to different AWS resources like Elastic Load Balancers, CloudFront distributions, or S3 buckets that are configured as websites (instead of directly pointing to IP of the resource).
 		- Alias records work like a CName record in which one DNS name is mapped to another DNS name.
 		
-		A CName can not be used for naked domain names (zone apex record i.e. without 'www' or other sub-domains)
 		
 		Start of Authority (SOA) Record:
 		where the DNS is going to start.
