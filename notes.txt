@@ -118,6 +118,18 @@ EC2 Placement Groups
 		each rack has its own network and power source
 		No two partitions within a placement group share the same racks, allowing to isolate the impact of hardware failure.
 		
+EC2 PRICING
+	1. On-Demand (Least Commitment)
+		- low cost (pay per hour)
+		- cannot handle interruptions
+	2. Spot (Biggest Saving)
+		- flexible start and end times
+		- can handle interruptions (server randomly stopping and starting)
+	3. Reserved (Best Long-term)
+		- steady state
+		- requires commitment over a 1 or 3 year term
+	4. Dedicated (Most Expensive)
+		- 
 ----------------------------------------------------------------------------------------------------
 AWS Database
 	two features of AWS databases :
