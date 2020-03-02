@@ -38,7 +38,7 @@ Volumes and Snapshots :
 	Snapshots are incremental
 	To create a snapshot for Amazon EBS volumes that serve as root devices, you should stop the instance before taking the snapshot.
 	You can create an AMI from Volumes and Snapshot both.
-	You can change EBS volume size and storage type on the fly.`
+	You can change EBS volume size and storage type on the fly.
 	volumes will always be in the same availability zone as the EC2 instance.
 	To move an EC2 volume to another AZ and region, take a snapshot of it, create an AMI from the snapshot and then use the AMI to launch an EC2 instance in new AZ region
 	Snapshots can be shared with other AWS accounts or made public. (for sharing, snapshot needs to be unencrypted)
@@ -142,12 +142,12 @@ AWS Database
 	Online Transaction processing (OLTP)
 	
 	RDS: (relational database service)
-		1. SQL Server
-		2. Oracle
-		3. MySQL Server
-		4. PostgressSQL
-		5. Aurora
-		6. MariaDB
+		1. SQL Server (16TB Max)
+		2. Oracle (can scale upto 32TB)
+		3. MySQL Server (can scale upto 32TB)
+		4. PostgressSQL (can scale upto 32TB)
+		5. Aurora (can scale upto 64TB)
+		6. MariaDB (can scale upto 32TB)
 	
 	DynamoDB: (non-relational database service)
 		- NoSQL solution

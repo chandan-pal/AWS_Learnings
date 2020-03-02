@@ -1,6 +1,6 @@
-file systems : manages data as files and file hierarchy
-block store  : manages data as blocks within sectors and tracks
-object store : manages data as objects
+File Systems : manages data as files and file hierarchy
+Block Store  : manages data as blocks within sectors and tracks
+Object Store : manages data as objects
 
 S3
 -----------------------------------------------------------------------------------------------------------------------------------------
@@ -8,29 +8,29 @@ S3 provides unlimited storage
 In S3 everything is object, which may consist of key, value, version ID, metadata
 
 S3 storage classes:
-1. Standard (default) : Fast, 99.99% availability, 11 9's durability, replicated across at-least three AZs (cost highest)
-2. Intelligent Tiering : uses ML to analyze usage and determine appropriate class (may be less costlier than standard)
-3. Standard Infrequenytly accessed : reduced availibility. additional retrieval fee is applied. (Cheaper than standard)
-4. One Zone Infrequenytly accessed : only available in one Az, 99.5% availibility, reduced durability (cheaper than standard IA)
-5. Glacier : for long term cold storage, retrieval can take from minutes to hours. (very cheap)
-6. Glacier deep archive : data retrieval time is 12 hours (lowest cost)
+1. Standard (default)				 : Fast, 99.99% availability, 11 9's durability, replicated across at-least three AZs (cost highest)
+2. Intelligent Tiering				 : 99.9% availability, uses ML to analyze usage and determine appropriate class (may be less costlier than standard)
+3. Standard Infrequenytly accessed	 : 99.5% availability, additional retrieval fee is applied. (Cheaper than standard)
+4. One Zone Infrequenytly accessed	 : only available in one Az, 99.5% availibility, reduced durability (cheaper than standard IA)
+5. Glacier							 : for long term cold storage, retrieval can take from minutes to hours. (very cheap)
+6. Glacier deep archive				 : data retrieval time is 12 hours (lowest cost)
 
-S3 security:
-- all new buckets are private
-- access control is configured using BUCKET POLICIES and ACCESS CONTROL LIST
+S3 Security:
+- All new buckets are private
+- Access control is configured using BUCKET POLICIES and ACCESS CONTROL LIST
 - MFA delete (versioning is required)
-- security in transit : uploading is done over SSL
-- there is option to enable server side encryprion (using AES, KMS or customer provided key)
+- Security in transit : uploading is done over SSL
+- Security at rest    : There is option to enable server side encryprion (using AES, KMS or customer provided key)
 
 S3 Cross Region Replication (CRR):
-- can be enabled to automatically replicate to another region, for potential disaster recovery.
-- for this versioning should be turned on for both source and destination buckets
+- Can be enabled to automatically replicate to another region, for potential disaster recovery.
+- For this versioning should be turned on for both source and destination buckets
 - CRR can also replicate to another AWS account
 
 S3 lifecycle management:
-- lifecycle management gives various rules like moving objects to different S3 class, deleting objects etc.
-- can be used together with versioning
-- can be applied to both current and previous versions
+- Lifecycle management gives various rules like moving objects to different S3 class, deleting objects etc.
+- Can be used together with versioning
+- Can be applied to both current and previous versions
 
 S3 pre-signed URLS:
 - a url to provide temporary access to an object to either upload or download object data.
