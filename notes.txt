@@ -222,7 +222,7 @@ Route53
 		DNS is on port 53
 		IPv4 space is a 32 bits fields and has over 4 billion different addresses.
 		IPv6 space is a 128 bits fields
-		Top level domain names (.com, .in, .co, .edu etc...) are controlled by the internet assigned Numbers Authority (IANA) in a root zone database.
+		Top level domain names (.com, .in, .co, .edu etc...) are controlled by the Internet Assigned Numbers Authority (IANA) in a root zone database.
 		A registrar (Amazon, GoDaddy.com, etc...) is an authority which can assign domain names directly under one or more top-level domains.
 		These domain names are registered by the registrar with interNIC, a service of ICANN, which enforces uniqueness of domain names across the internet.
 		Each domain name becomes registered in a central database known as WhoIs database.
@@ -302,21 +302,23 @@ VPC (Virtual Private Cloud)
 	- Instance security groups
 	- subnet Network Access Control Lists (NACL).
 	
-	Types of VPC
-	- Default and custom
-	- Default is user friendly, allowing to immediately deploy instances.
+	Default VPC
+	- There is a default VPC in each AWS account
+	- Default VPC has a default subnet in it
+	- Default VPC is user friendly, allowing to immediately deploy instances.
 	- All subnets in VPC have a route out to internet
-	- each EC2 instance has both public and private IP address
+	- Each EC2 instance has both public and private IP address in default VPC
 	
 	ROUTE TABLES
+		Route tables operate at subnet level
 		Route tables are used to determine where network traffic is directed.
 		Each subnet in VPC must be associated with a route table.
 		A subnet can only be associated with one route table at a time, but same route table can be associated with multiple subnets
 	
 	
 	VPC PEERING
-	- allows to connect one VPC to another(even in different region or different AWS account) via a direct network route using private IP address
-	- instances in this case behave as if they were on the same private network
+	- Allows to connect one VPC to another(even in different region or different AWS account) via a direct network route using private IP address
+	- Instances in this case behave as if they were on the same private network
 	- Peering is in STAR configuration (no transitive peering, only direct peering)
 	- VPC peering only routes traffic between source and destination VPCs. VPC peering does not support edge to edge routing.
 	
@@ -326,32 +328,32 @@ VPC (Virtual Private Cloud)
 	- NAT Gateways are not dependent on single instances.
 	- NAT Gateways cannot span AZs
 	- NAT Gateways start at 5Gbps and scales currently to 45 Gbps
-	- no need to patch OS of NAT Gateways
+	- No need to patch OS of NAT Gateways unlikt NAT instances
 	- NAT Gateways are not associated with security groups
-	- Automatically assigned a public IP address
-	- no need to disable source/destination checks on NAT Gateways
+	- NAT Gateways are automatically assigned a public IP address
+	- No need to disable source/destination checks on NAT Gateways
 	
 	NACL (Network Access Control List) (virtual firewall at subnet level)
 	- VPC caomes with default NACL, which by default allows all outbound and inbound traffic.
-	- by default all custom NACL denies all inbound and outbound traffic untill any rule is added.
+	- By default all custom NACL denies all inbound and outbound traffic untill any rule is added.
 	- Each subnet in VPC must be associated with a NACL, if not explicitly associated, the subnet is automatically associated with default NACL.
-	- it is recommended to block IP addresses using NACL, and not through security groups.
+	- It is recommended to block IP addresses using NACL, and not through security groups.
 	- one NACL can be associated with multiple subnets but one subnet can be associated with only one NACL.
 	- NACLs contain a numbered list of rules that is evaluated in order, starting with the lowest numbered rule.
 	- NACLs have separate inbound and outbound rules, and each rule can either allow or deny traffic.
 	- NACLs are stateless which means responses to inboud traffic are subject to rules for outbound traffic (and vice versa)
 	
 	VPC FLOW LOGS:
-	- feature that enables to capture information about the IP traffic going to and from the network interfaces in VPC
+	- Feature that enables to capture information about the IP traffic going to and from the network interfaces in VPC
 	- Flow log data is stored using Amazon CloudWatch Logs.
 		Flow logs can be created at 3 levels
 		1. VPC level
 		2. Subnet level
 		3. Network Interface level
-	- you cannot enable flow logs for VPCs that are peered with your VPC unless the peer VPC is in the same AWS account
-	- you cannot tag a flow log
+	- You cannot enable flow logs for VPCs that are peered with your VPC unless the peer VPC is in the same AWS account
+	- You cannot tag a flow log
 	- VPC flow logs contain source and destination IP addresses (not hostnames)
-	- configuration of flow log cannot be changed after creation
+	- Configuration of flow logs cannot be changed after creation
 	- Traffic generated by instances when they contact the Amazon DNS server are not monitored
 	- Traffic generated by a windows instance for Amazon Windows license activation are not monitored
 	- Traffic to and from 169.254.169.254 for instance metadata are not monitored
@@ -359,21 +361,21 @@ VPC (Virtual Private Cloud)
 	- Traffic to the reserved IP address for default VPC router are not monitored
 	
 	BASTION HOSTS:
-	- special purpose computer on a network specially designed, configured and hardened to withstand attacks.
-	- the computer generally hosts a single application, for example a proxy server, and all other services are removed or limited
+	- Special purpose computer on a network specially designed, configured and hardened to withstand attacks.
+	- The computer generally hosts a single application, for example a proxy server, and all other services are removed or limited
 	- Bastion is also called Jump Boxes in Australia
 	- A NAT Gateway cannot be used as a Bastion host
 	
 	AWS DIRECT CONNECT:
-	- solution that makes it easy to establish a dedicated private network connection from your premises to AWS.
-	- It can reduce network cost, increase bandwidth throughput, and provide a more consistent network exerience than internet-based connection
+	- Solution that makes it easy to establish a dedicated private network connection from your premises to AWS.
+	- It can reduce network cost, increase bandwidth throughput, and provide a more consistent network experience than internet-based connection
 	
 	VPC ENDPPOINTS
-	- enables to privately connect VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway,  NAT device, VPN connection or AWS Direct connect connection.
-	- instances in VPC do not require public IP addresses to communicate with resources in the service.
+	- Enables to privately connect VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection or AWS Direct connect connection.
+	- Instances in VPC do not require public IP addresses to communicate with resources in the service.
 	- Traffic between VPC and other services does not leave Amazon network.
 	- Basically, they are virtual devices, horizontally scaled, redundant and highly available VPC components that allow communication between instances in your VPC services without imposing availability risks or bandwidth constraints on your network traffic.
-	- there are two types of VPC Endpoints:
+	- There are two types of VPC Endpoints:
 		1. Interface Endpoints
 			- uses Elastic Network Interface (ELI) with a private IP address that serves as an entry point for traffic destined to a supported service.
 			- costs money
@@ -381,10 +383,10 @@ VPC (Virtual Private Cloud)
 			- a gateway that is a target for specific route in your route table
 			- are free
 
-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 HA Architecture
 	ELASTIC LOAD BALANCERS:
-	- physical or virtual device desined to balance network load or application load.
+	- Physical or virtual device desined to balance network load or application load.
 	- Types of load balancers:
 		1. Application Load Balancer
 			- load balancing of http and https traffic
@@ -398,74 +400,74 @@ HA Architecture
 			- they use layer 7 specific features (such as X-Forwarded, sticky sessions)
 			- strict layer 4 load balancing can also be used for application that rely purely on the TCP protocol.
 			- if the application stops responding the load balancer responds with 504 error.
-	- if you need the IP address of your end user, look for the X-Forwarded-For header
-	- load balancers perform health checks on the instances by talking to them and mark them either InService or OutOfService.
-	- load balancers have their own DNS name (IP address is not given)
+	- If you need the IP address of your end user, look for the X-Forwarded-For header
+	- Load balancers perform health checks on the instances by talking to them and mark them either InService or OutOfService.
+	- Load balancers have their own DNS name (IP address is not given)
 	
 	STICKY SESSIONS:
-	- sticky sessions allow to bind a user's session to a specific instance in case of classic load balancer.
-	- sticky sessions can also be enabled for Application Load Balancers, but the traffic will be sent at the target group level rather than individual instance
+	- Sticky sessions allow to bind a user's session to a specific instance in case of classic load balancer.
+	- Sticky sessions can also be enabled for Application Load Balancers, but the traffic will be sent at the target group level rather than individual instance
 	
 	CROSS ZONE LOAD BALANCING:
 	- Elastic load balancers cannot send traffic to another availability zone if cross zone load balancing is not enabled.
 	
 	PATH PATTERN:
-	- a listener can be created with rules to forward requests based on the URL path known as path based routing.
+	- A listener can be created with rules to forward requests based on the URL path known as path based routing.
 	
 	AUTO-SCALING GROUP
-	- launch configration and auto-scaling groups can used to automatically launch or shut instances based on scaling policies (configurable)
+	- Launch configration and Auto-Scaling groups can be used to automatically launch or shut instances based on scaling policies (configurable)
 	
 	ELASTIC BEANSTALK:
-	- a way of quickly deploy and manage applications in AWS cloud without worrying about the infrastructure that runs the application.
+	- A way to quickly deploy and manage applications in AWS cloud without worrying about the infrastructure that runs the application.
 	- Elastic Beanstalk automatically handles the details of capacity provisioning, load balancing, scaling, and application health monitoring.
 ---------------------------------------------------------------------------------------------------------------
-AWS Applications
+Other AWS Applications
 	SQS:
-	- a distributed queue system that enables web service applications to quickly and reliably queue messages that one component in the applications generates, to be consumed by another component.
-	- a temporary repository for messages that are awaiting processing.
-	- messages can contain upto 256 KB of text in any format.
-	- any component of a distributed application can store messages in a fail-safe queue.
-	- any component can later retrieve the messages programmatically using the Amazon SQS API
-	- SQS is pull based and not pushed based.
-	- messages can be kept in the queue from 1 min to 14 days, default is 4 days
-	- visibility timeout is the amount of time that the message is invisible in SQS queue after a reader picks up that message.
-	- if the message is not processed within that period of time, it will become visible again (otherwise deleted from the queue)
-	- visibility timeout maximum is 12 hours
+	- A distributed queue system that enables web service applications to quickly and reliably queue messages that one component in the applications generates, to be consumed by another component.
+	- A temporary repository for messages that are awaiting processing.
+	- Messages can contain upto 256 KB of text in any format.
+	- Any component of a distributed application can store messages in a fail-safe queue.
+	- Any component can later retrieve the messages programmatically using the Amazon SQS API
+	- SQS is pull based and not push based.
+	- Messages can be kept in the queue from 1 min to 14 days, default is 4 days
+	- Visibility timeout is the amount of time that the message is invisible in SQS queue after a reader picks up that message.
+	- If the message is not processed within that period of time, it will become visible again (otherwise deleted from the queue)
+	- Visibility timeout maximum is 12 hours
 	- Types of SQS queues:
 		1. Standard Queues ()
-			nearly unlimited no of transacions per second (TPS)
-			guarantee that a message is delivered at least once, but can be delivered more than once also
-			messages are generally delivered in the same order as they are sent (but not always)
+			- nearly unlimited no of transacions per second (TPS)
+			- guarantee that a message is delivered at least once, but can be delivered more than once also
+			- messages are generally delivered in the same order as they are sent (but not always)
 		2. Fifo Queues
-			limited to 300 transactions per second
-			they are first-in-first out and exactly once processing
-			duplicate are not introduced
+			- limited to 300 transactions per second
+			- they are first-in-first out and exactly once processing
+			- duplicates are not introduced
 	
 	SWF:
 	- Simple Workflow Service
-	- makes it easy to co-ordinate work across distributed application components
+	- Makes it easy to co-ordinate work across distributed application components
 	- SWF enables applications for a range of use cases, including media processing, web application back-ends, business process workflows, and analytics pipelines, to be designed as a coordination of tasks
 	- SQS has retention period of 14 days while SWF workflow executions can last upto 1 year.
-	- SWF presents a task-oriented API, whereas SWF provides a message-oriented API
-	- SWF ensures the task is assigned only once and is never duplicated, while with SQS duplicated messages may need to handle.
+	- SWF presents a task-oriented API, whereas SQS provides a message-oriented API
+	- SWF ensures the task is assigned only once and is never duplicated, while with SQS duplicated messages may need to be handled.
 	- SWF keeps track of all the tasks and events in an application, whereas with SQS own application level tracking may be needed.
 	- SWF Actors-
 		1. Workflow Starters - application that can initiate a workflow
-		2. Deciders - control the flow of activity tasks in a workflow execution. decides on what to do next.
-		3. Activity workers - carry out the activity tasks
+		2. Deciders 		 - control the flow of activity tasks in a workflow execution. decides on what to do next.
+		3. Activity workers	 - carry out the activity tasks
 	
 	SNS:
 	- Simpe Notification Service
-	- service that makes it easy to set up, operate and send notifications from the cloud.
-	- provides cost effective capability to publish messages from an application and immediately deliver them to subscribers or other applications
-	- instantaneous, push based delivery (no polling)
-	- beside pushing cloud notification to cloud devices, SNS can also deliver notifications by SMS text message or email to amazon SQS queues or to any HTTP endpoint.
-	topic - an access point for allowing recipients to dynamically subscribe for identical copies of the same notification. SNS allows to group multiple recipients. One topic can support delivery to multiple endpoint types.
-	- to prevent messages from being lost, all messages publishedto SNS are stored redundantly across multiple AZs.
+	- Service that makes it easy to set up, operate and send notifications from the cloud.
+	- Provides cost effective capability to publish messages from an application and immediately deliver them to subscribers or other applications
+	- Instantaneous, push based delivery (no polling)
+	- Beside pushing cloud notification to cloud devices, SNS can also deliver notifications by SMS text message or email, to amazon SQS queues or to any HTTP endpoint.
+	Topic - an access point for allowing recipients to dynamically subscribe for identical copies of the same notification. SNS allows to group multiple recipients. One topic can support delivery to multiple endpoint types.
+	- To prevent messages from being lost, all messages published to SNS are stored redundantly across multiple AZs.
 	- Simple APIs and easy integration with applications
-	- flexible message delivery, over multiple transfer protocols
-	- inexpensive, pay-as-you-go model with no up-front cost.
-	- web based AWS management console
+	- Flexible message delivery, over multiple transfer protocols
+	- Inexpensive, pay-as-you-go model with no up-front cost.
+	- Web based AWS management console
 	
 	ELASTIC TRANSCODER:
 	- media transcoder in the cloud.
@@ -473,21 +475,21 @@ AWS Applications
 	- provides transcoding presets for popular output formats
 	
 	API GATEWAY:
-	- fully managed service that makes it easy for developers to publish, maintain, monitor, and secure APIs at any scale
-	- with few clicks in AWS management console, you can create an API that acts as a front door for applications to access to access data, business logic, or functionality from your back-end services, such as applicatins running on EC2, code running on AWS Lambda, or any web application
+	- Fully managed service that makes it easy for developers to publish, maintain, monitor, and secure APIs at any scale
+	- With few clicks in AWS management console, you can create an API that acts as a front door for applications to access to access data, business logic, or functionality from your back-end services, such as applicatins running on EC2, code running on AWS Lambda, or any web application
 	- Users -----------> API Gateway ----------------------> Lambda/EC2/DynamoDB
-	- it can expose HTTPS endpoints to define a RESTful API
+	- It can expose HTTPS endpoints to define a RESTful API
 	- Serverlessly connect to services like Lambda & DynamoDB
-	- can send each API endpoint to a different target
-	- runs efficiently with low cost and scales effortlessly
-	- track and control usage by API key
-	- throttle requests to prevent attacks
-	- connect to CloudWatch to log all requests for monitoring
-	- maintain multiple versions of the API
-	- usages API gateway domain by default, but custom domain can also be used
-	- supports AWS certificate manager: free SSL/TLS certificates
-	- supports caching of endpoint response, hence can reduce number of calls to API endpoint / improve latency of requests to API
-	- same-origin-policy:
+	- Can send each API endpoint to a different target
+	- Runs efficiently with low cost and scales effortlessly
+	- Track and control usage by API key
+	- Throttle requests to prevent attacks
+	- Connect to CloudWatch to log all requests for monitoring
+	- Maintain multiple versions of the API
+	- Usages API gateway domain by default, but custom domain can also be used
+	- Supports AWS certificate manager: free SSL/TLS certificates
+	- Supports caching of endpoint response, hence can reduce number of calls to API endpoint / improve latency of requests to API
+	- Same-origin-policy:
 		- under the policy a web-browser permits scripts contained in a first web page to access data in a second webpage only if both web-pages have same origin.
 		- This is done to prevent cross-site scripting (XSS) attacks
 		- enforced by web-browsers
@@ -497,9 +499,9 @@ AWS Applications
 		- CORS is enforced by the client
 	
 	KINESIS:
-	- platform on AWS to send streaming data to.
-	- it makes it easy to load and analyse streaming data.
-	- types of Kinesis:
+	- Platform on AWS to send streaming data to.
+	- It makes it easy to load and analyse streaming data.
+	- Types of Kinesis:
 		1. Kinesis Streams
 			- place to store steaming data
 			- default retention priod is 24 hour, max can be 7 days
@@ -512,8 +514,8 @@ AWS Applications
 		3. Kinesis Analytics
 			- works with Kinesis Streams or Kinesis Firehose, it can analyzse data inside either of the above service
 	
-	Amazon Cognito - Web Identity Federation:
-	- lets you give your users access to AWS resources after they have successfully authenticated with a web-based identity provider like amazon, facebook or google.
+	AMAZON COGNITO - Web Identity Federation:
+	- Lets you give your users access to AWS resources after they have successfully authenticated with a web-based identity provider like amazon, facebook or google.
 	- Following successful authentication, the user recieves an authentication code from the web ID provider, which they can trade for temporary AWS security credentials
 	- Amazon cognito provides following features -
 		- Sign-up and sign-in to your apps
@@ -526,20 +528,20 @@ AWS Applications
 		- Identity Pool authorise access to AWS resources
 ----------------------------------------------------------------------------------------------------------
 SERVERLESS
-	- an execution model where cloud provider (AWS, Azure, Google Cloud etc.) is responsible for executing a piece of code by dynamically allocating the resources. The executable code can be run inside dynamic stateless containers. There is no need to worry about the infrasture on which the code will be running. The amount charged is also based on number of executions/time of execution/resources(memory) used only for that period of time.
+	- An execution model where cloud provider (AWS, Azure, Google Cloud etc.) is responsible for executing a piece of code by dynamically allocating the resources. The executable code can be run inside dynamic stateless containers. There is no need to worry about the infrasture on which the code will be running. The amount charged is also based on number of executions/time of execution/resources(memory) used only for that period of time.
 	LAMBDA:
 	- AWS Labda is a compute service where you can upload your code and create a lambda function.
 	- AWS Lambda takes care of provisioning and managing the servers that you use to run the code.
 	- No need to worry about operating systems, patching, scaling etc.
-	- it can be used as an event-driven compute service.
-	- it can be used as on-demand compute service in response to an HTTP request using AWS API Gateway or API calls made using AWS SDKs
+	- It can be used as an event-driven compute service.
+	- It can be used as on-demand compute service in response to an HTTP request using AWS API Gateway or API calls made using AWS SDKs
 	- Lambda supports functions from following languages - Java, Python, Node.js, C#, Go, PowerShell, Ruby
 	- Architectures can get extremely complicated with lambda, AWS X-Ray allows to debug what is happening
 
 ------------------------------------------------------------------------------------------------------------
 Extra Notes:
 - S3 is a durable key-value store
-- Full S3 is quite expensive at around $0.023 per GB for the lowest band. S3 standard IA is $0.0125 per GB, S3 OneZone-IA is $0.01 per GB, and Legacy S3-RRS is around $0.024 per GB for the lowest band
+- Standard S3 is quite expensive at around $0.023 per GB for the lowest band. S3 standard IA is $0.0125 per GB, S3 OneZone-IA is $0.01 per GB, and Legacy S3-RRS is around $0.024 per GB for the lowest band
 - S3 has an availability of 99.99%, S3-IA has an availability of 99.9% while S3-1Zone-IA only has 99.5%.
 - There are two ways of securing S3, using either Access Control Lists (Permissions) or by using bucket Policies.
 - Amazon CloudFront is a fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency, high transfer speeds, all within a developer-friendly environment.
