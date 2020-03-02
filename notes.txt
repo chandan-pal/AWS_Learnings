@@ -12,7 +12,7 @@ NAT - Network Address Translation
 
 --------------------------------------------------------------------------------------------------------------------------------
 DATA TRANSFER SERVICE:
- - Snowball      : a peta-byte scale data transport solution in and out AWS (via physical briefcase computer) and cost effective than upload to S3
+ - Snowball      : a peta-byte scale data transport solution in and out of AWS (via physical briefcase computer) and cost effective than upload to S3
  - Snowball edge : smaller version of Snowball (100 TB) also has compute capability
  - Snowmobile    : an exabyte scale data transfer service used to move extremely large amounts of data to AWS
 
@@ -290,6 +290,7 @@ VPC (Virtual Private Cloud)
 	- Amazon always reserves 5 IP addresses within the subnets (four starting and one last).
 	- you can only have one internet gateway per VPC
 	- security groups can't span VPCs
+	- security groups are region specific
 	
 	What can we do with a VPC?
 	- Launch instances into a subnet of our choosing
@@ -316,6 +317,7 @@ VPC (Virtual Private Cloud)
 	- allows to connect one VPC to another(even in different region or different AWS account) via a direct network route using private IP address
 	- instances in this case behave as if they were on the same private network
 	- Peering is in STAR configuration (no transitive peering, only direct peering)
+	- VPC peering only routes traffic between source and destination VPCs. VPC peering does not support edge to edge routing.
 	
 	NAT Instances & NAT Gateways/Internet Gateways (IGW):
 	- NAT Instances are individual EC2 instances
@@ -540,7 +542,7 @@ Extra Notes:
 - S3 has an availability of 99.99%, S3-IA has an availability of 99.9% while S3-1Zone-IA only has 99.5%.
 - There are two ways of securing S3, using either Access Control Lists (Permissions) or by using bucket Policies.
 - Amazon CloudFront is a fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency, high transfer speeds, all within a developer-friendly environment.
-- When connecting a VPN between AWS and a third party site, the Customer Gateway is created within AWS, but it contains information about the third party site e.g. the external IP address and type of routing. 
+- When connecting a VPN between AWS and a third party site, the Customer Gateway is created within AWS, but it contains information about the third party site e.g. the external IP address and type of routing.
 - The Virtual Private Gateway has the information regarding the AWS side of the VPN and connects a specified VPC to the VPN.
 - AWS offers 4 levels of support-Enterprise, Business, Developer and the Basic free level.
 - Launch permissions, S3 bucket permissions, and user-defined tags must be copied manually to an instance based on an AMI. User data is part of the AMI, itself, and does not need to be copied manually.
