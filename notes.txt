@@ -12,7 +12,7 @@ NAT - Network Address Translation
 
 --------------------------------------------------------------------------------------------------------------------------------
 DATA TRANSFER SERVICE:
- - Snowball      : a peta-byte scale data transport solution in and out of AWS (via physical briefcase computer) and cost effective than upload to S3
+ - Snowball      : a peta-byte scale data transport solution in and out of AWS (via physical briefcase computer) and cost effective than upload to S3 using internet
  - Snowball edge : smaller version of Snowball (100 TB) also has compute capability
  - Snowmobile    : an exabyte scale data transfer service used to move extremely large amounts of data to AWS
 
