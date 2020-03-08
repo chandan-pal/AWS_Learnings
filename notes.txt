@@ -26,7 +26,7 @@ EC2 (Elastic Cloud Compute)
 
 EBS Elastic Block Store (vitual hard disk drive in AWS)
 	General Purpose (gp2)  : all purpose
-	Provisioned IOPS (io1) : Highest performance - generally for Database
+	Provisioned IOPS (io1) : Highest performance - generally for Database (32,000 IOPS)
 	Throughput HDD (st1)   : Big data and data warehousing
 	Cold HDD (sc1)         : lowest cost - less frequently access like file servers - less performance
 	EBS Magnetic (standard): outdated - infrequently access workloads - least performance
@@ -42,11 +42,13 @@ Volumes and Snapshots :
 	volumes will always be in the same availability zone as the EC2 instance.
 	To move an EC2 volume to another AZ and region, take a snapshot of it, create an AMI from the snapshot and then use the AMI to launch an EC2 instance in new AZ region
 	Snapshots can be shared with other AWS accounts or made public. (for sharing, snapshot needs to be unencrypted)
+	EBS volumes only exist in a single availability zone while EBS snapshots are available in one AWS region.
 	
 AMI Types based on storage for the root device
 	1. EBS
 		For EBS volumes the root device launched from the AMI is an Amazon EBS volume created from an Amazon EBS Snapshot.
 		EBS is persistence based storage.
+		You can use Amazon Data Lifecycle Manager (Amazon DLM) to automate the creation, retention, and deletion of snapshots taken to back up your Amazon EBS volumes, at no additional cost.
 	2. Instance Store
 		For instance volume the root device launched from the AMI is an instance store volume created from template stored in Amazon S3
 		Instance Store volumes are called ephemeral storage, because Instance store volumes can not be stopped.
@@ -66,13 +68,14 @@ CLOUD WATCH
 		CPU
 		Network
 		Disk
-		Status Check
 	Cloud Watch with EC2 will monitor events standard monitoring is 5 mins and detailed monitoring is 1 min.
 	You can create CloudWatch alarms which trigger notifications.
+	you should use SNS instead of SES (Simple Email Service) when you want to monitor your EC2 instances.
 
 CLOUD WATCH VS CLOUD TRAIL
 	AWS Cloud Trail increases visibility into your user and resource activity by recording AWS Management Console actions and API calls.
 	By Cloud Trail you can identify which user and accounts called AWS, the source IP address from which the calls were made, and when the calls occurred.
+	AWS CloudTrail is a service that enables governance, compliance, operational auditing, and risk auditing of your AWS account.
 	
 IAM ROLES WITH EC2
 	Roles are more secure than storing access key and secret access key on individual EC2 instance.
@@ -157,8 +160,12 @@ AWS Database
 		- Spread across 3 geographically distinct data centers.
 		- eventual consistent reads (Default) - repeating a read after a short time should return the updated data.
 		- Strongly Consistent reads - returns a result that reflects all writes that recieved a successful response prior to the read.
+		- BLOB data is too large a chunk of data to be put into a NoSQL database such as DynamoDB.
 	
-	Encryption at rest is supported and done using AWS Key Management Service (KMS).
+	RDS is just a "managed" service and not "fully managed" while DynamoDB is "fully managed" service.
+	RDS multi AZ replication is synchronous.
+	RDS read replica is asynchronous.
+	Encryption at rest is supported and done using AWS Key Management Service (KMS) for both RDS and DynamoDB.
 	
 	Caching For Database:
 		ELASTICACHE (frequent identical queries) :
@@ -277,6 +284,14 @@ Route53
 	- Multivalue answer routing
 		- lets to comfigure Route 53 to return multiple values in response to DNS queries.
 		- This is similar to simple routing however it allows to put health checks on each record set.
+		
+	You can use Route 53 health checking to configure active-active and active-passive failover configurations.
+		Active-Active Failover:
+			- Use this failover configuration when you want all of your resources to be available the majority of the time. When a resource becomes unavailable, Route 53 can detect that it's unhealthy and stop including it when responding to queries.
+			- In active-active failover, all the records that have the same name, the same type (such as A or AAAA), and the same routing policy (such as weighted or latency) are active unless Route 53 considers them unhealthy. Route 53 can respond to a DNS query using any healthy record.
+
+		Active-Passive Failover
+			- Use an active-passive failover configuration when you want a primary resource or group of resources to be available the majority of the time and you want a secondary resource or group of resources to be on standby in case all the primary resources become unavailable.
 	
 --------------------------------------------------------------------------------------------------------
 VPC (Virtual Private Cloud)
@@ -320,7 +335,11 @@ VPC (Virtual Private Cloud)
 	- Allows to connect one VPC to another(even in different region or different AWS account) via a direct network route using private IP address
 	- Instances in this case behave as if they were on the same private network
 	- Peering is in STAR configuration (no transitive peering, only direct peering)
-	- VPC peering only routes traffic between source and destination VPCs. VPC peering does not support edge to edge routing.
+	- VPC peering only routes traffic between source and destination VPCs
+	- The following VPC peering connection configurations are NOT supported.
+		1. Overlapping CIDR Blocks (NOT SUPPORTED)
+		2. Transitive Peering (NOT SUPPORTED)
+		3. Edge to Edge Routing Through a Gateway or Private Connection (NOT SUPPORTED)
 	
 	NAT Instances & NAT Gateways/Internet Gateways (IGW):
 	- NAT Instances are individual EC2 instances
@@ -365,6 +384,11 @@ VPC (Virtual Private Cloud)
 	- The computer generally hosts a single application, for example a proxy server, and all other services are removed or limited
 	- Bastion is also called Jump Boxes in Australia
 	- A NAT Gateway cannot be used as a Bastion host
+	- it is basically just an EC2 instance.
+	- It should be in a public subnet with either a public or Elastic IP address with sufficient RDP or SSH access defined in the security group.
+	- Users log on to the bastion host via SSH or RDP and then use that session to manage other hosts in the private subnets.
+	- recommended to use a small instance rather than a large one because this host will only act as a jump server to connect to other instances in your VPC and nothing else.
+
 	
 	AWS DIRECT CONNECT:
 	- Solution that makes it easy to establish a dedicated private network connection from your premises to AWS.
@@ -385,21 +409,25 @@ VPC (Virtual Private Cloud)
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 HA Architecture
-	ELASTIC LOAD BALANCERS:
+	ELB (ELASTIC LOAD BALANCERS):
 	- Physical or virtual device desined to balance network load or application load.
 	- Types of load balancers:
 		1. Application Load Balancer
 			- load balancing of http and https traffic
 			- they operate at layer 7 and are application-aware
+			- If you need flexible application management and TLS termination then we recommend that you use Application Load Balancer.
+			- Application Load Balancers support path-based routing, host-based routing and support for containerized applications, unlike rest
 		2. Network Load Balancer
 			- load balancing of TCP traffic where extreme performance is required
 			- they operate at layer 4
+			- If extreme performance and static IP is needed for your application then we recommend that you use Network Load Balancer.
 		3. Classic Load Balancer
 			- legacy elastic load balancers
 			- load balancing of http/https applications
 			- they use layer 7 specific features (such as X-Forwarded, sticky sessions)
 			- strict layer 4 load balancing can also be used for application that rely purely on the TCP protocol.
 			- if the application stops responding the load balancer responds with 504 error.
+			- If your application is built within the EC2 Classic network then you should use Classic Load Balancer.
 	- If you need the IP address of your end user, look for the X-Forwarded-For header
 	- Load balancers perform health checks on the instances by talking to them and mark them either InService or OutOfService.
 	- Load balancers have their own DNS name (IP address is not given)
@@ -414,8 +442,15 @@ HA Architecture
 	PATH PATTERN:
 	- A listener can be created with rules to forward requests based on the URL path known as path based routing.
 	
-	AUTO-SCALING GROUP
+	AUTO-SCALING GROUP (ASG)
 	- Launch configration and Auto-Scaling groups can be used to automatically launch or shut instances based on scaling policies (configurable)
+	- A launch configuration is a template that an Auto Scaling group uses to launch EC2 instances.
+	- You can't modify a launch configuration after you've created it.
+	- You are limited to running up to a total of 20 On-Demand instances across the instance family, purchasing 20 Reserved Instances, and requesting Spot Instances per your dynamic Spot limit per region.
+	Cooldown Period:
+		- It ensures that the Auto Scaling group does not launch or terminate additional EC2 instances before the previous scaling activity takes effect.
+		- Its default value is 300 seconds.
+		- 
 	
 	ELASTIC BEANSTALK:
 	- A way to quickly deploy and manage applications in AWS cloud without worrying about the infrastructure that runs the application.
@@ -434,7 +469,7 @@ Other AWS Applications
 	- If the message is not processed within that period of time, it will become visible again (otherwise deleted from the queue)
 	- Visibility timeout maximum is 12 hours
 	- Types of SQS queues:
-		1. Standard Queues ()
+		1. Standard Queues
 			- nearly unlimited no of transacions per second (TPS)
 			- guarantee that a message is delivered at least once, but can be delivered more than once also
 			- messages are generally delivered in the same order as they are sent (but not always)
@@ -452,9 +487,13 @@ Other AWS Applications
 	- SWF ensures the task is assigned only once and is never duplicated, while with SQS duplicated messages may need to be handled.
 	- SWF keeps track of all the tasks and events in an application, whereas with SQS own application level tracking may be needed.
 	- SWF Actors-
-		1. Workflow Starters - application that can initiate a workflow
+		1. Workflow Starters - application that can initiate a workflow.
 		2. Deciders 		 - control the flow of activity tasks in a workflow execution. decides on what to do next.
+							 - By responding to decision tasks in an ongoing manner, the decider controls the order, timing, and concurrency of activity tasks 	and consequently the execution of processing steps in the application.
 		3. Activity workers	 - carry out the activity tasks
+	- decision task : Amazon SWF issues decision tasks whenever a workflow execution has transitions such as an activity task completing or timing out. A decision task contains information on the inputs, outputs, and current state of previously initiated activity tasks. Decider uses this data to decide the next steps, including any new activity tasks, and returns those to Amazon SWF. Amazon SWF in turn enacts these decisions, initiating new activity tasks where appropriate and monitoring them.
+
+
 	
 	SNS:
 	- Simpe Notification Service
@@ -511,12 +550,13 @@ Other AWS Applications
 		2. Kinesis Firehose
 			- no persistent storage
 			- need to do something with the data as soon as it comes to firehose
+			- It can capture, transform, and load streaming data into Amazon S3, Amazon Redshift, Amazon Elasticsearch Service, and Splunk, enabling near real-time analytics
 		3. Kinesis Analytics
 			- works with Kinesis Streams or Kinesis Firehose, it can analyzse data inside either of the above service
 	
 	AMAZON COGNITO - Web Identity Federation:
 	- Lets you give your users access to AWS resources after they have successfully authenticated with a web-based identity provider like amazon, facebook or google.
-	- Following successful authentication, the user recieves an authentication code from the web ID provider, which they can trade for temporary AWS security credentials
+	- Following successful authentication, the user recieves an authentication code (CognitoID) from the web ID provider, which they can trade for temporary AWS security credentials
 	- Amazon cognito provides following features -
 		- Sign-up and sign-in to your apps
 		- access for guest users
@@ -532,6 +572,7 @@ SERVERLESS
 	LAMBDA:
 	- AWS Labda is a compute service where you can upload your code and create a lambda function.
 	- AWS Lambda takes care of provisioning and managing the servers that you use to run the code.
+	- AWS Lambda supports synchronous and asynchronous invocation of a Lambda function.
 	- No need to worry about operating systems, patching, scaling etc.
 	- It can be used as an event-driven compute service.
 	- It can be used as on-demand compute service in response to an HTTP request using AWS API Gateway or API calls made using AWS SDKs
@@ -539,14 +580,44 @@ SERVERLESS
 	- Architectures can get extremely complicated with lambda, AWS X-Ray allows to debug what is happening
 
 ------------------------------------------------------------------------------------------------------------
+AWS IoT Core
+	AWS IoT Core is a managed cloud service that lets connected devices easily and securely interact with cloud applications and other devices. AWS IoT Core provides secure communication and data processing across different kinds of connected devices and locations so you can easily build IoT applications.
+
+
+------------------------------------------------------------------------------------------------------------
+AWS ENI (Elastic Network Interface)
+	An elastic network interface (ENI) is a logical networking component in a VPC that represents a virtual network card.
+	You can attach a network interface to an EC2 instance in the following ways:
+		When it's running (hot attach)
+		When it's stopped (warm attach)
+		When the instance is being launched (cold attach).
+------------------------------------------------------------------------------------------------------------
+CLOUD FRONT
+	- Amazon CloudFront is a fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency, high transfer speeds, all within a developer-friendly environment.
+	
+	To securely serve this private content by using CloudFront, you can do the following:
+	- Require that your users access your private content by using special CloudFront signed URLs or signed cookies.
+	- set up an origin access identity (OAI) for your Amazon S3 bucket, so that S3 content is not directly accesible with S3 URLs
+------------------------------------------------------------------------------------------------------------
+
 Extra Notes:
 - S3 is a durable key-value store
 - Standard S3 is quite expensive at around $0.023 per GB for the lowest band. S3 standard IA is $0.0125 per GB, S3 OneZone-IA is $0.01 per GB, and Legacy S3-RRS is around $0.024 per GB for the lowest band
-- S3 has an availability of 99.99%, S3-IA has an availability of 99.9% while S3-1Zone-IA only has 99.5%.
+- S3 one-zone IA is an Amazon S3 storage class for data that is accessed less frequently, but requires rapid access when needed.
 - There are two ways of securing S3, using either Access Control Lists (Permissions) or by using bucket Policies.
-- Amazon CloudFront is a fast content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency, high transfer speeds, all within a developer-friendly environment.
 - When connecting a VPN between AWS and a third party site, the Customer Gateway is created within AWS, but it contains information about the third party site e.g. the external IP address and type of routing.
 - The Virtual Private Gateway has the information regarding the AWS side of the VPN and connects a specified VPC to the VPN.
 - AWS offers 4 levels of support-Enterprise, Business, Developer and the Basic free level.
 - Launch permissions, S3 bucket permissions, and user-defined tags must be copied manually to an instance based on an AMI. User data is part of the AMI, itself, and does not need to be copied manually.
-
+- if the primary database instance fails, The canonical name record (CNAME) is switched from the primary to standby instance.
+- For new accounts, there is a soft limit of 20 EC2 instances per region. Submit an Amazon EC2 instance Request Form in order to lift this limit.
+- An S3 bucket that is configured to host a static website. The bucket must have the same name as your domain or subdomain.
+- an MX record specifies the mail server responsible for accepting email messages on behalf of a domain name
+- Perfect Forward Secrecy is a feature that provides additional safeguards against the eavesdropping of encrypted data through the use of a unique random session key. This prevents the decoding of captured data, even if the secret long-term key is compromised.
+- Pilot Light : The term pilot light is often used to describe a DR scenario in which a minimal version of an environment is always running in the cloud.
+- AWS Security Token Service (AWS STS) is the service that you can use to create and provide trusted users with temporary security credentials that can control access to your AWS resources.
+- The Reserved Instance Marketplace is a platform that supports the sale of third-party and AWS customers' unused Standard Reserved Instances
+- The standby instance will not perform any read and write operations while the primary instance is running multi AZ deployment.
+- Lambda@Edge is a feature of Amazon CloudFront that lets you run code closer to users of your application, which improves performance and reduces latency. 
+- Amazon Athena is an interactive query service that makes it easy to analyze data directly in Amazon Simple Storage Service (Amazon S3) using standard SQL.
+- AWS Global Accelerator is a service that improves the availability and performance of your applications with local or global users. It provides static IP addresses that act as a fixed entry point to your application endpoints in a single or multiple AWS Regions,

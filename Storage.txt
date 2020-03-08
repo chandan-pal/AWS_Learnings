@@ -6,6 +6,7 @@ S3
 -----------------------------------------------------------------------------------------------------------------------------------------
 S3 provides unlimited storage
 In S3 everything is object, which may consist of key, value, version ID, metadata
+The largest object that can be uploaded in a single PUT is 5 GB
 
 S3 storage classes:
 1. Standard (default)				 : Fast, 99.99% availability, 11 9's durability, replicated across at-least three AZs (cost highest)
@@ -20,7 +21,7 @@ S3 Security:
 - Access control is configured using BUCKET POLICIES and ACCESS CONTROL LIST
 - MFA delete (versioning is required)
 - Security in transit : uploading is done over SSL
-- Security at rest    : There is option to enable server side encryprion (using AES, KMS or customer provided key)
+- Security at rest    : There is option to enable server side encryprion (using AES-256, KMS or customer provided key)
 
 S3 Cross Region Replication (CRR):
 - Can be enabled to automatically replicate to another region, for potential disaster recovery.
@@ -35,4 +36,9 @@ S3 lifecycle management:
 S3 pre-signed URLS:
 - a url to provide temporary access to an object to either upload or download object data.
 - commonly used to provide access to private objects
+
+Amazon S3 supports the following destinations where it can publish events:
+- SNS
+- SQS
+- Lambda
 -----------------------------------------------------------------------------------------------------------------------------------------
