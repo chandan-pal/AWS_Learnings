@@ -63,12 +63,12 @@ AMI Types based on storage for the root device
 		you can share snapshots only if they are unencrypted.
 	
 CLOUD WATCH
-	a monitoring service to monitor your AWS resources, as well as the applications that you run on AWS.
+	A monitoring service to monitor your AWS resources, as well as the applications that you run on AWS.
 	Host level metrics consist of :
 		CPU
 		Network
 		Disk
-	Cloud Watch with EC2 will monitor events standard monitoring is 5 mins and detailed monitoring is 1 min.
+	Cloud Watch with EC2 will monitor events, standard monitoring is 5 mins and detailed monitoring is 1 min.
 	You can create CloudWatch alarms which trigger notifications.
 	you should use SNS instead of SES (Simple Email Service) when you want to monitor your EC2 instances.
 
@@ -135,11 +135,11 @@ EC2 PRICING
 		- 
 ----------------------------------------------------------------------------------------------------
 AWS Database
-	two features of AWS databases :
+	Two features of AWS databases :
 	- Multi AZ - for disaster recovery : allows to have an exact copy of the database in another Availability Zone. AWS handles the replication.
-	- Read replicas - for performance
+	- Read replicas - for performance : allows to have a read copy of the database for read requests.
 	
-	RDS runs into virtual machines, but you cannot login/ssh to those machines
+	RDS runs into virtual machines, but you cannot login/ssh to those machines.
 	Patching of RDS machine's operating system and DB is amazon's responsibility
 	RDS is not serverless (except Aurora serverless)
 	Online Transaction processing (OLTP)
