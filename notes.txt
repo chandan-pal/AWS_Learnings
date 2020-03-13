@@ -347,7 +347,7 @@ VPC (Virtual Private Cloud)
 	- NAT Gateways are not dependent on single instances.
 	- NAT Gateways cannot span AZs
 	- NAT Gateways start at 5Gbps and scales currently to 45 Gbps
-	- No need to patch OS of NAT Gateways unlikt NAT instances
+	- No need to patch OS of NAT Gateways unlike NAT instances
 	- NAT Gateways are not associated with security groups
 	- NAT Gateways are automatically assigned a public IP address
 	- No need to disable source/destination checks on NAT Gateways
@@ -443,7 +443,7 @@ HA Architecture
 	- A listener can be created with rules to forward requests based on the URL path known as path based routing.
 	
 	AUTO-SCALING GROUP (ASG)
-	- Launch configration and Auto-Scaling groups can be used to automatically launch or shut instances based on scaling policies (configurable)
+	- Launch configuration and Auto-Scaling groups can be used to automatically launch or shut instances based on scaling policies (configurable)
 	- A launch configuration is a template that an Auto Scaling group uses to launch EC2 instances.
 	- You can't modify a launch configuration after you've created it.
 	- You are limited to running up to a total of 20 On-Demand instances across the instance family, purchasing 20 Reserved Instances, and requesting Spot Instances per your dynamic Spot limit per region.
