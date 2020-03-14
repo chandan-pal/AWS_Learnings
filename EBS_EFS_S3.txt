@@ -7,6 +7,7 @@ EBS stores data on block system which is retained after the EC2 instance is shut
 - EBS volumes offer redundancy within its Availability Zones while access control and encryption bolster security.
 - Two EC2 instances cannot share one EBS volume.
 - You can change EBS volume size and storage type on the fly.
+- You can use Amazon Data Lifecycle Manager (Amazon DLM) to automate the creation, retention, and deletion of snapshots taken to back up your Amazon EBS volumes, at no additional cost.
 
 
 EFS offers scalable file storage, optimized for EC2
